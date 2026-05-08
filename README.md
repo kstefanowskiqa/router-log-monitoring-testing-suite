@@ -5,7 +5,7 @@ This project is a real-time router log monitoring system that collects logs via 
 
 The project is also used as a QA testing case study, focusing on test design, edge cases, and system reliability.
 
-![Python](https://img.shields.io/badge/Python-3.x-blue)
+![Python](https://img.shields.io/badge/Python-3.14.3-blue)
 ![Status](https://img.shields.io/badge/status-active-success)
 ![QA](https://img.shields.io/badge/focus-QA_testing-purple)
 
@@ -89,6 +89,18 @@ The project focuses on:
 - Bug reporting
 - System reliability testing
 - Real-time data processing validation
+
+---
+
+## 📦 Main Dependencies
+
+| Library | Purpose |
+|---|---|
+| matplotlib | Chart generation |
+| numpy | Data processing |
+| psutil | System monitoring |
+| requests | HTTP communication |
+| pillow | Image processing |
 
 ---
 
