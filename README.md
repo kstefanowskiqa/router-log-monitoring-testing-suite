@@ -92,6 +92,38 @@ The project focuses on:
 
 ---
 
+## 🖥️ Test Environment
+
+| Component | Details |
+|---|---|
+| Test Laptop | Lenovo IdeaPad Y580 |
+| CPU | Intel Core i7 (3rd Gen Ivy Bridge) |
+| GPU | NVIDIA GeForce GTX 660M |
+| RAM | DDR3 Memory |
+| Operating System | Windows |
+| Main Router | ASUS ZenWiFi BQ16 |
+| Mesh Nodes | 2x ASUS ZenWiFi ET12 |
+| Network Protocol | UDP Syslog |
+| Programming Language | Python 3.x |
+| Data Visualization | Matplotlib |
+| Testing Type | Manual Testing, Stability Testing, Burst Traffic Testing |
+| Runtime Mode | Real-Time Continuous Monitoring |
+
+---
+
+## 🌐 Real Network Environment
+
+The system was tested in a real home network environment using ASUS mesh infrastructure and live router-generated syslog traffic.
+
+The testing environment allowed realistic validation of:
+- continuous log monitoring
+- burst traffic detection
+- anomaly detection
+- long runtime stability
+- real-time statistics generation
+
+---
+
 ## 👨‍💻 Author
 Karol Stefanowski  
 Aspiring QA Engineer
