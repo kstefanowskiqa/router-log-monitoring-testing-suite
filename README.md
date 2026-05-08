@@ -102,6 +102,13 @@ The project focuses on:
 | requests | HTTP communication |
 | pillow | Image processing |
 
+## ⚠️ Known Limitations
+
+- Currently tested only on Windows 10
+- Requires router syslog support
+- No graphical dashboard implemented yet
+- File-based storage may become inefficient under extreme long-term load
+
 ---
 
 ## 🖥️ Test Environment
