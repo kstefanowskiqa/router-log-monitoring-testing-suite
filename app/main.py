@@ -9,10 +9,10 @@ from datetime import datetime
 from collections import defaultdict, deque
 
 # ========================
-# KONFIGURACJA
+# CONFIGURATION
 # ========================
 
-UDP_IP = "0.0.0.0" # Komputer IP
+UDP_IP = "127.0.0.1" # Komputer IP
 UDP_PORT = XXXX # UDP Set on the router
 
 LOG_DIR = "logs"
@@ -31,7 +31,7 @@ os.makedirs(CHART_DIR, exist_ok=True)
 last_hourly_update = None
 
 # ========================
-# POMOCNICZE
+# AUXILIARY
 # ========================
 
 def log_system_event(message):
@@ -88,7 +88,7 @@ def generate_daily_chart(daily_stats, final=False):
     plt.savefig(filename)
     plt.close()
 
-    log_system_event(f"Wygenerowano wykres: {filename}")
+    log_system_event(f"Generated chart: {filename}")
 
 def update_top10():
     files = glob.glob(os.path.join(HISTORY_DIR, "*.json"))
@@ -128,15 +128,15 @@ def detect_anomaly(new_day_total):
             "average": round(avg, 2)
         })
         save_json("anomalies.json", anomalies)
-        log_system_event("WYKRYTO ANOMALIĘ RUCHU.")
+        log_system_event("A TRAFFIC ANOMALY WAS DETECTED.")
 
 def reset_system_log():
     with open(SYSTEM_LOG, "w", encoding="utf-8") as f:
-        f.write("=== NOWA SESJA ===\n")
+        f.write("=== NEW SESSION ===\n")
         f.write(f"Start: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
 
 # ========================
-# START APLIKACJI (bez main, bez supervisor)
+# START OF THE APPLICATION (without main, without supervisor)
 # ========================
 
 start_time = time.time()
@@ -145,14 +145,14 @@ processed_packets = 0
 last_heartbeat = time.time()
 
 reset_system_log()
-log_system_event("=== START SKRYPTU ===")
-log_system_event(f"PID procesu: {process_id}")
-log_system_event(f"Nasłuchiwanie na {UDP_IP}:{UDP_PORT}")
+log_system_event("=== SCRIPT START ===")
+log_system_event(f"PID process: {process_id}")
+log_system_event(f"Listening to {UDP_IP}:{UDP_PORT}")
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sock.bind((UDP_IP, UDP_PORT))
 
-print("Nasłuchiwanie logów...")
+print("Listening to log...")
 
 daily_stats = reset_daily()
 global_stats = load_json(GLOBAL_STATS_FILE)
@@ -179,26 +179,26 @@ while True:
             burst_window.popleft()
 
         if len(burst_window) > BURST_THRESHOLD_5SEC:
-            log_system_event(f"ALERT: BURST > {BURST_THRESHOLD_5SEC} logów / 5s")
+            log_system_event(f"ALERT: BURST > {BURST_THRESHOLD_5SEC} logs / 5s")
         
         log_entry = data.decode(errors="ignore").strip()
         now = datetime.now()
 
-        # ===== Heartbeat co 60 sek =====
+        # ===== Heartbeat every 60 sec =====
         if time.time() - last_heartbeat >= 60:
             uptime = round((time.time() - start_time) / 60, 2)
-            log_system_event(f"Heartbeat | uptime: {uptime} min | pakiety: {processed_packets}")
+            log_system_event(f"Heartbeat | uptime: {uptime} min | packets: {processed_packets}")
             last_heartbeat = time.time()
 
-        # ===== Aktualizacja wykresu co godzinę =====
+        # ===== Chart update every hour =====
         current_hour = now.strftime("%Y-%m-%d %H")
         if last_hourly_update != current_hour:
             generate_daily_chart(daily_stats)
             last_hourly_update = current_hour
 
-        # ===== Zmiana dnia =====
+        # ===== Change of day =====
         if daily_stats["date"] != get_today():
-            log_system_event("Zmiana dnia - archiwizacja.")
+            log_system_event("Change of day - archiving.")
 
             archived_data = {
                 **daily_stats,
@@ -215,7 +215,7 @@ while True:
 
             daily_stats = reset_daily()
 
-        # ===== Zapis logu =====
+        # ===== Log entry =====
         timestamp = now.strftime("%Y-%m-%d %H:%M:%S")
         with open(get_log_file(), "a", encoding="utf-8") as f:
             f.write(f"[{timestamp}] {log_entry}\n")
@@ -259,5 +259,5 @@ while True:
 
     except Exception:
         error_info = traceback.format_exc()
-        log_system_event("!!! BŁĄD W PĘTLI GŁÓWNEJ !!!")
+        log_system_event("!!! MAIN LOOP ERROR !!!")
         log_system_event(error_info)
