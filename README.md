@@ -8,6 +8,7 @@ The project is also used as a QA testing case study, focusing on test design, ed
 ![Python](https://img.shields.io/badge/Python-3.14.3-blue)
 ![Status](https://img.shields.io/badge/status-development_stopped-yellow)
 ![QA](https://img.shields.io/badge/focus-QA_testing-purple)
+![Test Status](https://img.shields.io/badge/Testing_Status-Not_fully_tested-orange)
 
 ---
 
